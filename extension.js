@@ -45,8 +45,12 @@ function activate(context) {
     if (getProperty(search, "copyToClipboard", false)) {
       vscode.env.clipboard.writeText(docText.substring(selectStart, selectEnd)).then((v)=>v, (v)=>null);
     }
-    if (getProperty(search, "showSelection", true)) {
+    if (getProperty(search, "showSelection", false)) {
       editor.selection = new vscode.Selection(editor.document.positionAt(selectStart), editor.document.positionAt(selectEnd));
+    }
+    if (getProperty(search, "moveToNextSection", true)) {
+      var newCursorPos = selectEnd+2;
+      editor.selection = new vscode.Selection(editor.document.positionAt(newCursorPos), editor.document.positionAt(newCursorPos));
     }
   };
 
